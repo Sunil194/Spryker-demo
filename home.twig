@@ -1,0 +1,58 @@
+{% extends template('page-layout-main') %}
+
+{% define data = {
+	bannerData: _view.bannerData
+	} %}
+
+{% block pageInfo %}{% endblock %}
+
+{% block container %}
+
+    {% embed organism('jumbotron-slider') only %}
+        {% block body %}
+            {% embed molecule('slick-carousel') with {
+                attributes: {
+                    'data-json': attributes['data-json'],
+                },
+            } only %}
+                {% block slides %}
+                    {% for key,item in data.bannerData.includes.Asset%}
+                        <div class="" style="background-image: url('{{item.fields.file.url}}'); height: 500px;">
+                            <h2 class="page-layout-home__empty text-center" style="padding-top: 200px; color: white;">{{data.bannerData.items[key].fields.title}}</h2>
+                            <p class="page-layout-home__empty text-center" style="color: white;">{{data.bannerData.items[key].fields.description}}</p>
+                        </div>
+                    {% endfor %}
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
+    {% endembed %}
+
+
+   {#{% embed organism('jumbotron-slider') only %}
+        {% block body %}
+            {% embed molecule('slick-carousel') with {
+                attributes: {
+                    'data-json': attributes['data-json'],
+                },
+            } only %}
+                {% block content %}
+                    {% cms_slot 'slt-2' %}
+                {% endblock %}
+            {% endembed %}
+        {% endblock %}
+    {% endembed %}
+    #}
+    
+
+
+    <div class="container container--home-page">
+        <main>
+            {% block content %}
+
+                {% cms_slot 'slt-3' %}
+
+            {% endblock %}
+        </main>
+    </div>
+{% endblock %}
+
